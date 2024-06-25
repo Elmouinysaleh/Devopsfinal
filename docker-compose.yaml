@@ -3,9 +3,9 @@ services:
   db:
     image: mysql:latest
     environment:
-      - MYSQL_DATABASE=simple_attendance_db
-      - MYSQL_USER=abdelali
-      - MYSQL_PASSWORD=password # this should live in a env var
+      - MYSQL_DATABASE=absence
+      - MYSQL_USER=devops
+      - MYSQL_PASSWORD=devops # this should live in a env var
       - MYSQL_ALLOW_EMPTY_PASSWORD=1 # equivalent to True
     volumes:
       - "./app/db:/docker-entrypoint-initdb.d" # this is how we persist a sql db even when container stops

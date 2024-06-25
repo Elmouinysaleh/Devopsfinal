@@ -2,8 +2,8 @@
 class Database {
     private $host = 'localhost';
     private $db_name = 'absence';
-    private $username = 'root';
-    private $password = '';
+    private $username = 'devops';
+    private $password = 'devops';
     public $conn;
 
     public function getConnection() {
@@ -20,3 +20,4 @@ class Database {
     }
 }
 ?>
+~

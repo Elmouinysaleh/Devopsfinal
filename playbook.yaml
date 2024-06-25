@@ -27,22 +27,15 @@
         mode: '0755'
       when: ansible_system is defined and ansible_architecture is defined
 
-    - name: Create application directory
-      file:
-        path: /tmp/build
-        state: directory
-
     - name: Ensure rsync is installed
       apt:
         name: rsync
         state: present
-      become: yes
 
     - name: Remove existing application directory
       file:
         path: /tmp/build
         state: absent
-      become: yes
       ignore_errors: yes
 
     - name: Recreate application directory
@@ -52,13 +45,25 @@
 
     - name: Synchronize application files
       synchronize:
-        src: absence/
+        src: /home/vagrant/devopsfinal/
         dest: /tmp/build
+        delete: yes
         checksum: yes
         rsync_opts:
           - "--delete"
+
+    - name: Ensure docker-compose.yaml is present
+      copy:
+        src: /home/vagrant/devopsfinal/docker-compose.yaml
+        dest: /tmp/build/docker-compose.yaml
 
     - name: Run Docker Compose
       command: docker-compose up -d
       args:
         chdir: /tmp/build
+      register: result
+      ignore_errors: yes
+
+    - name: Print result of docker-compose up
+      debug:
+        var: result
